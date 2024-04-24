@@ -1,7 +1,7 @@
 
 import java.util.Random;
 
-public class Entity extends GameEngine {
+public class Entity extends GameObject{
     private int id;
     private String name;
     private int health;
