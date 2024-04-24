@@ -34,11 +34,76 @@ public class Enemy extends Entity {
     }
 
     public void takeDamage(int damage) {
-        super.takeDamage(damage);
-        if (!isAlive()) {
-            // Implement enemy death logic here, e.g., remove from game, play death
-            // animation
-            System.out.println(getName() + " has been defeated.");
-        }
+  super.takeDamage(damage); // Call parent class damage handling (if applicable)
+
+  // Track enemy health
+  int currentHealth = getHealth(); // Replace with your method to get enemy health
+  currentHealth -= damage;
+  setHealth(currentHealth); // Replace with your method to set enemy health
+
+  if (!isAlive()) {
+    // Enemy death logic
+    playDeathAnimation(); // Play death animation (falling and closing eyes)
+    removeFromGame(); // Remove enemy from game world
+
+    // Check for player death (assuming this is the player entity)
+    if (this instanceof Player) {
+      // Player death logic
+      System.out.println("You have been defeated!");
+      if (promptForRestart()) { // Ask player to restart
+        restartGame(); // Create a new game object (or trigger game restart logic)
+      } else {
+        // Handle player choosing not to restart (e.g., quit game)
+      }
     }
+  }
+}
+
+// Helper methods (replace with your actual implementations)
+private int getHealth() {
+  // Implement logic to return enemy's current health
+  return 0; // Placeholder
+}
+
+private void setHealth(int health) {
+  // Implement logic to set enemy's health
+  return; // Placeholder
+}
+
+private boolean isAlive() {
+  // Implement logic to check if enemy health is above 0
+  return false; // Placeholder
+}
+
+private void removeFromGame() {
+  // Implement logic to remove enemy from the game world (e.g., list, map)
+}
+
+// Death animation (replace with your game engine/library specific logic)
+private void playDeathAnimation() {
+  System.out.println(getName() + " falls down..."); // Placeholder animation text
+  // Implement animation for falling (e.g., sprite change, sound effect)
+  System.out.println(getName() + " closes their eyes..."); // Placeholder animation text
+  // Implement animation for closing eyes (e.g., sprite change)
+}
+
+// Prompt for game restart (replace with your UI library specific logic)
+private boolean promptForRestart() {
+  System.out.println("Play again? (y/n)");
+  String input = getUserInput(); // Replace with method to get user input
+  return input.equalsIgnoreCase("y");
+}
+
+// Get user input (replace with your UI library specific logic)
+private String getUserInput() {
+  // Implement logic to get user input from console or UI
+  return ""; // Placeholder
+}
+
+// Restart game (replace with your game initialization logic)
+private void restartGame() {
+  System.out.println("Starting a new game...");
+  // Create a new game object or trigger game restart logic
+}
+
 }
