@@ -4,7 +4,7 @@ public class Enemy extends Entity {
     private static final Random random = new Random();
     private Player player;
 
-    public Enemy(int id, String name, float x, float y, float mass, float friction, Player player) {
+    public Enemy(int id, String name, float x, float y, float mass, float friction,int health, Player player) {
         super(id, name, x, y, mass, friction);
         this.player = player;
     }
@@ -37,9 +37,9 @@ public class Enemy extends Entity {
   super.takeDamage(damage); // Call parent class damage handling (if applicable)
 
   // Track enemy health
-  int currentHealth = getHealth(); // Replace with your method to get enemy health
-  currentHealth -= damage;
-  setHealth(currentHealth); // Replace with your method to set enemy health
+  //int currentHealth = getHealth(); // Replace with your method to get enemy health
+  health -= damage;
+  //setHealth(currentHealth); // Replace with your method to set enemy health
 
   if (!isAlive()) {
     // Enemy death logic
@@ -62,17 +62,20 @@ public class Enemy extends Entity {
 // Helper methods (replace with your actual implementations)
 private int getHealth() {
   // Implement logic to return enemy's current health
-  return 0; // Placeholder
+  return health; // Placeholder
 }
 
-private void setHealth(int health) {
+//private void setHealth(int health) {
   // Implement logic to set enemy's health
-  return; // Placeholder
-}
+  //return; // Placeholder
+//}
 
 private boolean isAlive() {
   // Implement logic to check if enemy health is above 0
-  return false; // Placeholder
+  if (getHealth()<=0){
+	  return false
+  }
+  return true; // Placeholder
 }
 
 private void removeFromGame() {
