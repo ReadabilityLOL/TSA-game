@@ -1,36 +1,49 @@
-extends Node
+extends Node2D
 
-# Reference to the TileMap node
-onready var tile_map = $TileMap
+const N = 1
+const E = 2
+const S = 4
+const W = 8
 
-# Preload the enemy and ally scenes
-var EnemyScene = preload("res://path/to/Enemy.tscn")
-var AllyScene = preload("res://path/to/Ally.tscn")
+var cell_walls = {
+    Vector2(1, 0): E, Vector2(-1, 0): W,
+    Vector2(0, 1): S, Vector2(0, -1): N
+}
 
-# Tile IDs for enemy and ally spawns
-const ENEMY_TILE_ID = 1
-const ALLY_TILE_ID = 2
+var tile_size = 64
+var width = 25
+var height = 15
+
+onready var Map = $TileMap
 
 func _ready():
-    generate_entities()
+    randomize()
+    tile_size = Map.cell_size
+    make_maze()
 
-func generate_entities():
-    var used_cells = tile_map.get_used_cells()
-    for cell in used_cells:
-        var tile_id = tile_map.get_cellv(cell)
-        var position = tile_map.map_to_world(cell) + tile_map.cell_size / 2
-        
-        if tile_id == ENEMY_TILE_ID:
-            spawn_enemy(position)
-        elif tile_id == ALLY_TILE_ID:
-            spawn_ally(position)
+func make_maze():
+    var unvisited = []
+    var stack = []
+    Map.clear()
+    for x in range(width):
+        for y in range(height):
+            unvisited.append(Vector2(x, y))
+            Map.set_cellv(Vector2(x, y), N | E | S | W)
+    var current = Vector2(0, 0)
+    unvisited.erase(current)
 
-func spawn_enemy(position):
-    var enemy = EnemyScene.instance()
-    enemy.global_transform.origin = position
-    add_child(enemy)
+    while unvisited.size() > 0:
+        var neighbors = check_neighbors(current, unvisited)
+        if neighbors.size() > 0:
+            var next = neighbors[randi() % neighbors.size()]
+            stack.append(current)
+            var dir = next - current
+            var current_walls = Map.get_cellv(current) - cell_walls[dir]
+            var next_walls = Map.get_cellv(next) - cell_walls[-dir]
+            Map.set_cellv(current, current_walls)
+            Map.set_cellv(next, next_walls)
+            current = next
+            unvisited.erase(current)
+        elif stack.size() > 0:
+            current = stack.pop_back()
 
-func spawn_ally(position):
-    var ally = AllyScene.instance()
-    ally.global_transform.origin = position
-    add_child(ally)
