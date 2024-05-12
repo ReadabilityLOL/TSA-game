@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm4qspbr3blpd"]
+
+[ext_resource type="Script" path="res://Scripts/Game Over Overlay.gd" id="1_skc3b"]
+
+[node name="Game Over Overlay" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_skc3b")
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 1088.0
+offset_bottom = 576.0
+
+[node name="Label" type="Label" parent="Panel"]
+offset_right = 1024.0
+offset_bottom = 192.0
+theme_override_font_sizes/font_size = 111
+text = "Game Over!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 328.0
+offset_right = 592.0
+offset_bottom = 408.0
+text = "Retry!"
+
+[connection signal="pressed" from="Panel/Button" to="." method="_on_button_pressed"]

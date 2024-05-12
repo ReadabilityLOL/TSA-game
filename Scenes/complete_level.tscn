@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dle7ng6ysu2oq"]
+
+[ext_resource type="Script" path="res://Scripts/CompleteLevel.gd" id="1_2j3q2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o5iiu"]
+size = Vector3(2.7749, 4.25983, 1)
+
+[node name="CompleteLevel" type="Area3D"]
+script = ExtResource("1_2j3q2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0455208, -0.445867, 0.0663576)
+shape = SubResource("BoxShape3D_o5iiu")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4cyoim416nt3"]
+
+[ext_resource type="Script" path="res://Scenes/Player/GUI/Inventory/main.gd" id="1_g6ib7"]
+[ext_resource type="Script" path="res://Scenes/Player/GUI/Inventory/inventory_slot.gd" id="1_tggo1"]
+
+[node name="Inventory" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 216.0
+offset_right = -104.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g6ib7")
+
+[node name="Grid" type="GridContainer" parent="."]
+layout_mode = 2
+offset_left = 456.0
+offset_top = 176.0
+offset_right = 1000.0
+offset_bottom = 496.0
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 16
+columns = 6
+
+[node name="InventorySlot" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 304.0
+offset_top = 280.0
+offset_right = 344.0
+offset_bottom = 320.0
+script = ExtResource("1_tggo1")
